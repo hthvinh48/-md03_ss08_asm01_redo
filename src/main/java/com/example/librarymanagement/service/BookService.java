@@ -1,8 +1,10 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.dto.request.BookCreateDTO;
+import com.example.librarymanagement.dto.request.BookUpdateStockDTO;
 import com.example.librarymanagement.entity.Book;
 import com.example.librarymanagement.exception.FileStorageException;
+import com.example.librarymanagement.exception.ResourceNotFoundException;
 import com.example.librarymanagement.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,5 +46,14 @@ public class BookService {
         book.setStock(bookCreateDTO.getStock());
         book.setCoverUrl(fileName);
         return bookRepository.save(book);
+    }
+
+    public void updateBook(Long id, BookUpdateStockDTO bookUpdateStockDTO) {
+        Book existingBook = bookRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Book with id " + id + " not found")
+        );
+
+        existingBook.setStock(bookUpdateStockDTO.getStock());
+        bookRepository.save(existingBook);
     }
 }
