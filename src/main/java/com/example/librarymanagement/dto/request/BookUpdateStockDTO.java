@@ -11,6 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BookUpdateStockDTO {
-    @Min(0)
+    @Min(value = 0, message = "stock must be greater than or equal to 0")
     private Integer stock;
 }
