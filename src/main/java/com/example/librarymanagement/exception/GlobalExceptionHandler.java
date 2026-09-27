@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
@@ -37,6 +38,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BookAlreadyReturnedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleBookAlreadyReturnedException(BookAlreadyReturnedException ex) {
+        return new ErrorResponse("ERROR", ex.getMessage(), LocalDateTime.now());
+    }
+
+    @ExceptionHandler(IOException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleIOException(IOException ex) {
         return new ErrorResponse("ERROR", ex.getMessage(), LocalDateTime.now());
     }
 }
