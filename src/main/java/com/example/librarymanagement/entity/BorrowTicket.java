@@ -6,23 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "borrows")
-public class Borrow {
+@Table(name = "borrow_tickets")
+public class BorrowTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private BorrowStatus borrowStatus;
 
-    private Long bookId;
+    private LocalDateTime returnDate;
 
-    @OneToMany(mappedBy = "borrow")
-    private List<BorrowTicket> borrowTickets;
+    @ManyToOne
+    @JoinColumn(name = "borrow_id")
+    private Borrow borrow;
 }

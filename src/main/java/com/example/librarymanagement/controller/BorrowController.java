@@ -6,10 +6,7 @@ import com.example.librarymanagement.service.BorrowService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/borrows")
@@ -24,6 +21,16 @@ public class BorrowController {
         borrowService.create(borrowCreateDTO);
         return ResponseEntity.ok(new ApiResponse<>(
                 "SUCCESS", "Book borrowed successfully", null
+        ));
+    }
+
+    @PatchMapping("/{id}/return")
+    public ResponseEntity<ApiResponse<Void>> returnBook(
+            @PathVariable Long id
+    ) {
+        borrowService.returnBook(id);
+        return  ResponseEntity.ok(new ApiResponse<>(
+                "SUCCESS", "Book returned successfully", null
         ));
     }
 }

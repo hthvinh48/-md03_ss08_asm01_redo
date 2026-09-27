@@ -33,4 +33,10 @@ public class GlobalExceptionHandler {
 
         return new ErrorResponse("ERROR", msgError, LocalDateTime.now());
     }
+
+    @ExceptionHandler(BookAlreadyReturnedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBookAlreadyReturnedException(BookAlreadyReturnedException ex) {
+        return new ErrorResponse("ERROR", ex.getMessage(), LocalDateTime.now());
+    }
 }
